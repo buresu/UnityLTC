@@ -97,5 +97,23 @@ public class LTCCapture : MonoBehaviour
             }
         }
 
+        //Debug.Log(_ltcBits);
+
+        // Find LTC block
+        int index = _ltcBits.IndexOf("0011111111111101");
+
+        if (index - 64 < 0)
+            _ltcBits.Remove(0, index + 16);
+
+        if (index - 64 > 0)
+        {
+            Debug.Log("find!");
+            string ltcBlock = _ltcBits.Substring(index - 64, 80);
+            Debug.Log(ltcBlock);
+            _ltcBits.Remove(0, index + 16);
+        }
+
+        if (_ltcBits.Length > 96)
+            _ltcBits.Remove(0, 80);
     }
 }
