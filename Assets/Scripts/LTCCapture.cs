@@ -12,6 +12,7 @@ public class LTCCapture : MonoBehaviour
 
     // LTC
     private string _ltcBits = "";
+    private bool _lastBitFlag= false;
 
     private void Start()
     {
@@ -62,7 +63,6 @@ public class LTCCapture : MonoBehaviour
         {
             int count = 0;
             bool sign = _audioBuffer[0] < 0;
-            bool flag = false;
 
             while (++count < _audioBuffer.Count)
             {
@@ -73,18 +73,18 @@ public class LTCCapture : MonoBehaviour
                     if (count > _audioInput.frequency / 3000)
                     {
                         _ltcBits += "0";
-                        flag = false;
+                        _lastBitFlag = false;
                     }
                     else if (count > _audioInput.frequency / 9000)
                     {
-                        if (flag)
+                        if (_lastBitFlag)
                         {
                             _ltcBits += "1";
-                            flag = false;
+                            _lastBitFlag = false;
                         }
                         else
                         {
-                            flag = true;
+                            _lastBitFlag = true;
                         }
                     }
 
