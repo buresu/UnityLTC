@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -57,8 +57,6 @@ public class LTCCapture : MonoBehaviour
 
         _lastAudioPos = pos;
 
-        //Debug.Log(_audioBuffer.Count);
-
         // Audio buffer to bit array
         if (_audioBuffer.Count > 0)
         {
@@ -71,9 +69,7 @@ public class LTCCapture : MonoBehaviour
                 if (sign != (_audioBuffer[count] < 0))
                 {
                     sign = _audioBuffer[count] < 0;
-                    //Debug.Log(count);
-                    //Debug.Log(_audioInput.frequency / 3000);
-                    _audioBuffer.RemoveRange(0, count - 1);
+
                     if (count > _audioInput.frequency / 3000)
                     {
                         _ltcBits += "0";
@@ -91,13 +87,12 @@ public class LTCCapture : MonoBehaviour
                             flag = true;
                         }
                     }
+
+                    _audioBuffer.RemoveRange(0, count - 1);
                     count = 0;
-                    continue;
                 }
             }
         }
-
-        // Debug.Log(_ltcBits);
 
         // Find LTC block
         int index = _ltcBits.IndexOf("0011111111111101");
@@ -107,7 +102,6 @@ public class LTCCapture : MonoBehaviour
 
         if (index - 64 >= 0)
         {
-            Debug.Log("find!");
             string ltcBlock = _ltcBits.Substring(index - 64, 80);
             Debug.Log(ltcBlock);
             _ltcBits = _ltcBits.Remove(0, index + 16);
