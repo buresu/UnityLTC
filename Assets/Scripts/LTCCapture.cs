@@ -57,7 +57,7 @@ public class LTCCapture : MonoBehaviour
 
         _lastAudioPos = pos;
 
-        // Audio buffer to bit array
+        // Audio buffer to bit string
         if (_audioBuffer.Count > 0)
         {
             int count = 0;
@@ -88,7 +88,7 @@ public class LTCCapture : MonoBehaviour
                         }
                     }
 
-                    _audioBuffer.RemoveRange(0, count - 1);
+                    _audioBuffer.RemoveRange(0, count);
                     count = 0;
                 }
             }
