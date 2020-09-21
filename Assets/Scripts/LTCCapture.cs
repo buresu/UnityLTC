@@ -12,7 +12,8 @@ public class LTCCapture : MonoBehaviour
 
     // LTC
     private string _ltcBits = "";
-    private bool _lastBitFlag= false;
+    private bool _lastBitFlag = false;
+    private Timecode _timecode = new Timecode();
 
     private void Start()
     {
@@ -21,7 +22,7 @@ public class LTCCapture : MonoBehaviour
             Debug.Log(d);
 
         // Get device
-        _device = Microphone.devices[6];
+        _device = Microphone.devices[1];
 
         // Start capture
         _audioInput = Microphone.Start(_device, true, 1, 44100);
@@ -103,11 +104,18 @@ public class LTCCapture : MonoBehaviour
         if (index - 64 >= 0)
         {
             string ltcBlock = _ltcBits.Substring(index - 64, 80);
-            Debug.Log(ltcBlock);
+            _timecode = Timecode.FromBitString(ltcBlock);
             _ltcBits = _ltcBits.Remove(0, index + 16);
         }
 
         if (_ltcBits.Length >= 96)
             _ltcBits = _ltcBits.Remove(0, 80);
+    }
+
+    private void OnGUI()
+    {
+        GUI.skin.label.fontSize = 64;
+        GUI.color = Color.white;
+        GUI.Label(new Rect(0, 0, 400, 200), _timecode.ToString());
     }
 }
