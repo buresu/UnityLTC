@@ -32,26 +32,26 @@ public class Timecode
         return tc;
     }
 
-    static int Decode1BitString(string str, int pos)
+    private static int Decode1BitString(string str, int pos)
     {
         return int.Parse(str.Substring(pos, 1));
     }
 
-    static int Decode2BitString(string str, int pos)
+    private static int Decode2BitString(string str, int pos)
     {
         int v = Decode1BitString(str, pos);
         v += Decode1BitString(str, pos + 1) * 2;
         return v;
     }
 
-    static int Decode3BitString(string str, int pos)
+    private static int Decode3BitString(string str, int pos)
     {
         int v = Decode2BitString(str, pos);
         v += Decode1BitString(str, pos + 2) * 4;
         return v;
     }
 
-    static int Decode4BitString(string str, int pos)
+    private static int Decode4BitString(string str, int pos)
     {
         int v = Decode3BitString(str, pos);
         v += Decode1BitString(str, pos + 3) * 8;
