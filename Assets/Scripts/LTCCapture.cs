@@ -38,8 +38,8 @@ public class LTCCapture : MonoBehaviour
         // Update audio buffer
         int pos = Microphone.GetPosition(_device);
 
-        int size1 = pos < _lastAudioPos ? _audioInput.samples * _audioInput.channels - _lastAudioPos : 0;
-        int size2 = pos >= _lastAudioPos ? pos - _lastAudioPos : pos;
+        int size1 = pos >= _lastAudioPos ? pos - _lastAudioPos : _audioInput.samples * _audioInput.channels - _lastAudioPos;
+        int size2 = pos < _lastAudioPos ? pos : 0;
 
         if (size1 > 0)
         {
